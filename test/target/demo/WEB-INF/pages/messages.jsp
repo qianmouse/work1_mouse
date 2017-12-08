@@ -67,7 +67,7 @@
                 var time = new Date(result[i].date);
                 var tr=$("<tr id="+result[i].title+"></tr>");
                 tr.append("<td>"+result[i].title+"</td>");
-                tr.append("<td>"+time.getMonth()+"-"+time.getDate()+"</td>");
+                tr.append("<td>"+time.getMonth()+1+"-"+time.getDate()+"</td>");
                 tr.append("<td>" +
                     "<button type='button' class='delData'>删除</button>" +
                     "<button type='button' class='SeeData'>查看</button>" +

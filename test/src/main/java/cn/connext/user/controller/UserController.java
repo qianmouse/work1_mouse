@@ -1,6 +1,8 @@
 package cn.connext.user.controller;
 import cn.connext.md5.MD5Util;
 import cn.connext.user.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -24,6 +26,8 @@ public class UserController {
     @Resource
     private UserService userService;
 
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+
     //登录成功，返回到消息页面
     @RequestMapping("messages")
     public String messages(){
@@ -45,8 +49,7 @@ public class UserController {
     //判断输入的图片验证码是否正确
     @RequestMapping("inp.do")
     @ResponseBody
-    public String inp(String inp,HttpServletRequest request,
-                      HttpServletResponse response){
+    public String inp(String inp,HttpServletRequest request){
         HttpSession session = request.getSession();
         String num = (String) session.getAttribute("number");
         if (inp.equals(num)){
