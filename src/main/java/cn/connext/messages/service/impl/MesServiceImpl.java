@@ -18,9 +18,9 @@ public class MesServiceImpl implements MesService {
     @Resource
     private MesDao mesDao;
 
-    public String findText(String title){
-        String text = mesDao.findText(title);
-        return text;
+    public Mes findText(int mid){
+        Mes mes = mesDao.findText(mid);
+        return mes;
     }
 
     public Boolean findTitle(String title) {
@@ -35,6 +35,11 @@ public class MesServiceImpl implements MesService {
         return list;
     }
 
+    public List<Mes> findAll() {
+        List<Mes> list = mesDao.findAll();
+        return list;
+    }
+
     public void saveMes(String title, Date date, String text, String phone) {
         Mes mes = new Mes();
         mes.setTitle(title);
@@ -44,8 +49,16 @@ public class MesServiceImpl implements MesService {
         mesDao.saveMes(mes);
     }
 
-    public void delMes(String title) {
+    public void delMes(int mid) {
 
-        mesDao.delMes(title);
+        mesDao.delMes(mid);
+    }
+
+    public void editMes(String title,String text,int mid) {
+        Mes mes = new Mes();
+        mes.setTitle(title);
+        mes.setText(text);
+        mes.setMid(mid);
+        mesDao.editMes(mes);
     }
 }

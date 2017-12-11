@@ -13,7 +13,7 @@
     </select>
 
     <update id="register" parameterType="java.lang.String">
-        INSERT INTO user VALUES(#{phone},#{pwd})
+        INSERT INTO user(phone,pwd) VALUES(#{phone},#{pwd})
     </update>
 
     <update id="addCount" parameterType="java.lang.String">

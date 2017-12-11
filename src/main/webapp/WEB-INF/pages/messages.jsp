@@ -25,9 +25,9 @@
 
         //根据title删除消息
         function delData() {
-            var title = $(this).parent().parent().attr('id');
+            var mid = $(this).parent().parent().attr('id');
             var url = "/messages/delMes.do";
-            var params={"title":title};
+            var params={"mid":mid};
             $.post(url,params,function () {
                 alert("删除成功");
                 //删除消息后重新获得显示消息
@@ -35,15 +35,11 @@
             })
         }
 
-        //查看消息正文，显示在div中
+        //查看消息正文
         function SeeData() {
-            var title = $(this).parent().parent().attr('id');
+            var mid = $(this).parent().parent().attr('id');
             var url = "/messages/findText.do";
-            var params={"title":title};
-            $.post(url,params,function (text) {
-                $("#div").html(text);
-            })
-
+            window.location.href = url+"?mid="+mid;
         }
 
         //根据手机号获得消息集合
@@ -65,9 +61,14 @@
             tBody.empty();
             for(var i in result){
                 var time = new Date(result[i].date);
-                var tr=$("<tr id="+result[i].title+"></tr>");
+                var month = time.getMonth()+1;
+                var ctime = new Date(result[i].cdate);
+                var cmonth = ctime.getMonth()+1;
+                var tr=$("<tr id="+result[i].mid+"></tr>");
                 tr.append("<td>"+result[i].title+"</td>");
-                tr.append("<td>"+time.getMonth()+1+"-"+time.getDate()+"</td>");
+                tr.append("<td>"+month+"-"+time.getDate()+"</td>");
+                tr.append("<td>"+result[i].count+"</td>");
+                tr.append("<td>"+cmonth+"-"+ctime.getDate()+"</td>");
                 tr.append("<td>" +
                     "<button type='button' class='delData'>删除</button>" +
                     "<button type='button' class='SeeData'>查看</button>" +
@@ -90,20 +91,20 @@
 <body>
 <h2 id="h2"></h2>
 <a href="/user/login.do">退出登录</a>
-<a href="/messages/edit.do">新增消息</a>
+<a href="/messages/newMes.do">新增消息</a>
 <table border="1" width="800px">
     <thead>
     <tr>
         <td>title</td>
         <td>date</td>
+        <td>评论数</td>
+        <td>最后评论时间</td>
         <td>操作</td>
     </tr>
     </thead>
 
     <tbody id="tbody"></tbody>
 </table>
-
-<div id="div"></div>
 
 
 

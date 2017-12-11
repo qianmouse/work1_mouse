@@ -17,13 +17,12 @@
 
             $("#button").click(function () {
                 var title = $("#title").val();
+                var date = new Date();
                 var text = $("#text").val();
-                var mid = $(this).parent().parent().attr('id');
-                console.log(text);
-                console.log(title);
-                console.log(mid);
-                var url = "/messages/edit.do";
-                var params = {"title":title,"text":text,"mid":mid};
+                var phone = sessionStorage.getItem("phone");
+                var url = "/messages/saveMes.do";
+                var params = {"title":title,"date":date,"text":text,"phone":phone};
+                console.log(params);
                 $.post(url,params,function () {
                     alert("保存成功");
                     window.location.href = "/user/messages.do";
@@ -36,18 +35,19 @@
 <body>
 <h2 id="h2"></h2>
 <a href="/user/login.do">退出登录</a>
+<a href="/messages/edit.do">新增消息</a>
 <a href="/user/messages.do">我的消息</a>
 <form action="" method="post">
     <table border="1">
         <tr>
             <td>title：</td>
-            <td><input type="text" name="title" id="title" value="${mes.title}"></td>
+            <td><input type="text" name="title" id="title"></td>
         </tr>
         <tr>
             <td>text：</td>
-            <td><textarea name="text" id="text">${mes.text}</textarea></td>
+            <td><textarea name="text" id="text"></textarea></td>
         </tr>
-        <tr align="center" id="${mes.mid}">
+        <tr align="center">
             <td colspan="2"><input id="button" type="button" value="点击保存"></td>
         </tr>
     </table>

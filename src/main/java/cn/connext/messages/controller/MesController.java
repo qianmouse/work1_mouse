@@ -19,18 +19,43 @@ public class MesController {
     @Resource
     private MesService mesService;
 
-    //消息编辑页面
+    //前往论坛
+    @RequestMapping("forum")
+    public String forum(Model model){
+        List<Mes> list =  mesService.findAll();
+        model.addAttribute("list",list);
+        return "forum";
+    }
+
+    //消息修改
     @RequestMapping("edit")
-    public String edit(){
+    public String edit(String title,String text,int mid){
+        mesService.editMes(title,text,mid);
+        System.out.println(title+text+mid);
+        return "messages";
+    }
+
+    //消息编辑页面
+    @RequestMapping("editMes")
+    public String editMes(int mid,Model model){
+        Mes mes = mesService.findText(mid);
+        model.addAttribute("mes",mes);
         return "edit";
     }
 
-    //获得消息正文并返回
+    //消息新建页面
+    @RequestMapping("newMes")
+    public String newMes(){
+        return "newMes";
+    }
+
+    //获得消息并返回
     @RequestMapping("findText")
-    @ResponseBody
-    public String findText(String title){
-        String text =  mesService.findText(title);
-        return text;
+    public String findText(int mid,Model model){
+        Mes mes =  mesService.findText(mid);
+        model.addAttribute("mes",mes);
+
+        return "text";
     }
 
     //查询手机号对应的所有消息
@@ -60,8 +85,8 @@ public class MesController {
 
     //删除消息
     @RequestMapping("delMes")
-    public String delMes(String title){
-        mesService.delMes(title);
+    public String delMes(int mid){
+        mesService.delMes(mid);
         return "messages";
     }
 

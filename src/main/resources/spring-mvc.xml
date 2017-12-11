@@ -14,12 +14,19 @@
        http://www.springframework.org/schema/tx   
        http://www.springframework.org/schema/tx/spring-tx-4.3.xsd   
        http://www.springframework.org/schema/context  
-       http://www.springframework.org/schema/context/spring-context-4.3.xsd" >  
+       http://www.springframework.org/schema/context/spring-context-4.3.xsd" >
 
 
-    <context:component-scan base-package="cn.connext" />
     <!-- spring mvc 注解及类型转换 -->
-    <mvc:annotation-driven conversion-service="conversionService" />
+    <mvc:annotation-driven>
+        <mvc:message-converters>
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <constructor-arg value="UTF-8" />
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+    <context:component-scan base-package="cn.connext" />
+
     <bean id="conversionService"
         class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
     </bean>
@@ -30,6 +37,7 @@
         <property name="prefix" value="/WEB-INF/pages/" />
         <property name="suffix" value=".jsp"/>
     </bean>
-    
-     
+
+
+
 </beans>

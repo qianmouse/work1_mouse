@@ -6,21 +6,38 @@ import java.util.Date;
 //消息实体类t 
 @Component
 public class Mes {
+    private int mid;
     private String title;
 
     private Date date;
 
     private String text;
     private String phone;
+    private int count;
+    private Date cdate;
 
-    @Override
-    public String toString() {
-        return "Mes{" +
-                "phone='" + phone + '\'' +
-                ", date=" + date +
-                ", title='" + title + '\'' +
-                ", text='" + text + '\'' +
-                '}';
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public Date getCdate() {
+        return cdate;
+    }
+
+    public void setCdate(Date cdate) {
+        this.cdate = cdate;
+    }
+
+    public int getMid() {
+        return mid;
+    }
+
+    public void setMid(int mid) {
+        this.mid = mid;
     }
 
     public String getPhone() {
@@ -53,5 +70,18 @@ public class Mes {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    @Override
+    public String toString() {
+        return "Mes{" +
+                "mid=" + mid +
+                ", title='" + title + '\'' +
+                ", date=" + date +
+                ", text='" + text + '\'' +
+                ", phone='" + phone + '\'' +
+                ", count=" + count +
+                ", cdate=" + cdate +
+                '}';
     }
 }

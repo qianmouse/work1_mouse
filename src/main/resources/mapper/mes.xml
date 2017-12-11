@@ -6,9 +6,13 @@
         WHERE title=#{title};
     </select>
 
-    <select id="findText" resultType="java.lang.String" parameterType="java.lang.String">
-        SELECT text FROM messages
-        WHERE title=#{title};
+    <select id="findText" resultType="cn.connext.messages.entity.Mes" parameterType="int">
+        SELECT * FROM messages
+        WHERE mid=#{mid};
+    </select>
+
+    <select id="findAll" resultType="cn.connext.messages.entity.Mes">
+        SELECT * FROM messages ORDER BY cdate DESC ;
     </select>
 
     <select id="findMes" resultType="cn.connext.messages.entity.Mes" parameterType="java.lang.String">
@@ -17,13 +21,19 @@
     </select>
 
     <update id="saveMes" parameterType="cn.connext.messages.entity.Mes">
-        INSERT INTO messages VALUES(#{mes.title},#{mes.date},#{mes.text},#{mes.phone});
+        INSERT INTO messages(title,date,text,phone,cdate)
+        VALUES(#{mes.title},#{mes.date},#{mes.text},#{mes.phone},#{mes.date});
     </update>
 
-    <delete id="delMes" parameterType="java.lang.String">
+    <delete id="delMes" parameterType="int">
         DELETE FROM messages
-        WHERE title=#{title};
+        WHERE mid=#{mid};
     </delete>
+
+    <update id="editMes" parameterType="cn.connext.messages.entity.Mes">
+        UPDATE messages set text=#{mes.text},title=#{mes.title}
+        WHERE mid=#{mes.mid};
+    </update>
 
 
 </mapper>

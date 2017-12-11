@@ -8,6 +8,25 @@ import org.springframework.stereotype.Component;
 public class User {
     private String phone;
     private String pwd;
+    private String role;
+    private String permission;
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public String getPermission() {
+        return permission;
+    }
+
+    public void setPermission(String permission) {
+        this.permission = permission;
+    }
+
 
     public String getPhone() {
         return phone;
@@ -30,6 +49,8 @@ public class User {
         return "User{" +
                 "phone='" + phone + '\'' +
                 ", pwd='" + pwd + '\'' +
+                ", role='" + role + '\'' +
+                ", permission='" + permission + '\'' +
                 '}';
     }
 }

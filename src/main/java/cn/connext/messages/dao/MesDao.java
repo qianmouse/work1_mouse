@@ -12,12 +12,16 @@ import java.util.List;
 public interface MesDao {
     String findTitle(@Param("title") String title);
 
-    String findText(@Param("title") String title);
+    Mes findText(@Param("mid") int mid);
 
     List<Mes> findMes(@Param("phone") String phone);
 
+    List<Mes> findAll();
+
     void saveMes(@Param("mes") Mes mes);
 
-    void delMes(@Param("title") String title);
+    void delMes(@Param("mid") int mid);
+
+    void editMes(@Param("mes") Mes mes);
 
 }
