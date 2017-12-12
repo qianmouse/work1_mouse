@@ -32,7 +32,7 @@
                     }else {
                         //登录成功后将手机号存入sessionStorage，并跳转到消息页面
                         sessionStorage.setItem("phone",result);
-                        window.location.href = "/user/messages.do";
+                        window.location.href = "/user/messages.do?phone="+result;
                     }
 
                 })

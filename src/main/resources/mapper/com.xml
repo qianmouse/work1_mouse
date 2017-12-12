@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.connext.user.dao.ComDao">
+    <update id="putCom" parameterType="cn.connext.user.entity.Comment">
+        INSERT INTO comments(cdate,comment,mid,phone)
+        VALUE(#{com.cdate},#{com.comment},#{com.mid},#{com.phone});
+    </update>
+    
+    <update id="countAdd" parameterType="int">
+        UPDATE messages set count=count+1,
+        cdate=now()
+        WHERE mid=#{mid};
+    </update>
+
+    <update id="countMinus" parameterType="int">
+        UPDATE messages set count=count-1
+        WHERE mid=#{mid};
+    </update>
+    
+    <select id="findCom" resultType="cn.connext.user.entity.Comment" parameterType="int">
+        SELECT * FROM comments
+        WHERE mid=#{mid};
+    </select>
+    
+    <delete id="delCom" parameterType="int">
+        DELETE FROM comments
+        WHERE mid=#{mid};
+    </delete>
+
+    <delete id="delComByCid" parameterType="int">
+        DELETE FROM comments
+        WHERE cid=#{cid};
+    </delete>
+    
+
+</mapper>

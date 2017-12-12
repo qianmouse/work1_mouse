@@ -1,9 +1,14 @@
 package cn.connext.user.controller;
 import cn.connext.md5.MD5Util;
+import cn.connext.user.entity.Mes;
+import cn.connext.user.entity.Role;
+import cn.connext.user.entity.User;
+import cn.connext.user.service.MesService;
 import cn.connext.user.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -12,6 +17,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.List;
 import java.util.Random;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,12 +31,67 @@ import javax.servlet.http.HttpSession;
 public class UserController {
     @Resource
     private UserService userService;
+    @Resource
+    private MesService mesService;
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
+    //修改用户
+    @RequestMapping("alterUser")
+    @ResponseBody
+    public String alterUser(String phone,String identity,String role){
+        userService.alterUser(phone,identity,role);
+        return "ok";
+    }
+
+    //判断角色重名
+    @RequestMapping("roleName")
+    @ResponseBody
+    public String roleName(String role){
+        String str = userService.findRoleName(role);
+        return str;
+    }
+
+    //新建角色
+    @RequestMapping("newRole")
+    @ResponseBody
+    public String newRole(String role,String permission){
+        userService.newRole(role,permission);
+        return "ok";
+    }
+
+    //跳转到角色管理界面
+    @RequestMapping("role")
+    public String toRole(Model model){
+        List<Role> list = userService.findAllRole();
+        model.addAttribute("list",list);
+        return "role";
+    }
+
+    //跳转到管理员界面
+    @RequestMapping("toManage")
+    public String toManage(Model model){
+        List<User> list = userService.findUser();
+        List<Role> roleList = userService.findAllRole();
+        model.addAttribute("list",list);
+        model.addAttribute("roleList",roleList);
+        return "manage";
+    }
+
+    //查看管理员权限
+    @RequestMapping("manage")
+    @ResponseBody
+    public String manage(String phone){
+        if (userService.manage(phone))
+            return "isManager";
+        return "isUser";
+    }
+
     //登录成功，返回到消息页面
     @RequestMapping("messages")
-    public String messages(){
+    public String messages(Model model,String phone){
+        List<Mes> list = mesService.findMes(phone);
+        model.addAttribute("list",list);
         return "messages";
     }
 

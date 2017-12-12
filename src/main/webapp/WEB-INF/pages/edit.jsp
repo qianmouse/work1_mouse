@@ -14,7 +14,7 @@
         $(document).ready(function () {
             var phone = sessionStorage.getItem("phone");
             $("#h2").html("当前用户："+phone);
-
+            $("#index").attr("href","/user/messages.do?phone="+phone);
             $("#button").click(function () {
                 var title = $("#title").val();
                 var text = $("#text").val();
@@ -26,7 +26,7 @@
                 var params = {"title":title,"text":text,"mid":mid};
                 $.post(url,params,function () {
                     alert("保存成功");
-                    window.location.href = "/user/messages.do";
+                    window.location.href = "/messages/findText.do?mid="+mid;
                 })
             })
         })
@@ -35,8 +35,9 @@
 </head>
 <body>
 <h2 id="h2"></h2>
+<center>
 <a href="/user/login.do">退出登录</a>
-<a href="/user/messages.do">我的消息</a>
+    <a href="" id="index">我的消息</a>
 <form action="" method="post">
     <table border="1">
         <tr>
@@ -52,6 +53,6 @@
         </tr>
     </table>
 </form>
-
+</center>
 </body>
 </html>

@@ -1,26 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.connext.messages.dao.MesDao">
+<mapper namespace="cn.connext.user.dao.MesDao">
     <select id="findTitle" resultType="java.lang.String" parameterType="java.lang.String">
         SELECT title FROM messages
         WHERE title=#{title};
     </select>
 
-    <select id="findText" resultType="cn.connext.messages.entity.Mes" parameterType="int">
+    <select id="findText" resultType="cn.connext.user.entity.Mes" parameterType="int">
         SELECT * FROM messages
         WHERE mid=#{mid};
     </select>
 
-    <select id="findAll" resultType="cn.connext.messages.entity.Mes">
-        SELECT * FROM messages ORDER BY cdate DESC ;
-    </select>
+    <select id="findAll" resultType="cn.connext.user.entity.Mes">
+    SELECT * FROM messages ORDER BY cdate DESC ;
+</select>
 
-    <select id="findMes" resultType="cn.connext.messages.entity.Mes" parameterType="java.lang.String">
+    <select id="findMes" resultType="cn.connext.user.entity.Mes" parameterType="java.lang.String">
         SELECT * FROM messages
-        WHERE phone=#{phone};
+        WHERE phone=#{phone}
+        ORDER BY cdate DESC;
     </select>
 
-    <update id="saveMes" parameterType="cn.connext.messages.entity.Mes">
+    <update id="saveMes" parameterType="cn.connext.user.entity.Mes">
         INSERT INTO messages(title,date,text,phone,cdate)
         VALUES(#{mes.title},#{mes.date},#{mes.text},#{mes.phone},#{mes.date});
     </update>
@@ -30,7 +31,7 @@
         WHERE mid=#{mid};
     </delete>
 
-    <update id="editMes" parameterType="cn.connext.messages.entity.Mes">
+    <update id="editMes" parameterType="cn.connext.user.entity.Mes">
         UPDATE messages set text=#{mes.text},title=#{mes.title}
         WHERE mid=#{mes.mid};
     </update>
