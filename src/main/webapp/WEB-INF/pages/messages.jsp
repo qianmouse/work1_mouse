@@ -35,15 +35,19 @@
         }
 
 
-        //根据title删除消息
+        //根据mid删除消息
         function delData() {
             var mid = $(this).parent().parent().attr('id');
             var url = "/messages/delMes.do";
-            var params={"mid":mid};
-            $.post(url,params,function () {
-                alert("删除成功");
-                //删除消息后重新获得显示消息
-                window.location.href = "/user/messages.do?phone="+phone;
+            var params={"mid":mid,"phone":phone};
+            $.post(url,params,function (result) {
+                if("success" === result){
+                    alert("删除成功");
+                    //删除消息后重新获得显示消息
+                    window.location.href = "/user/messages.do?phone="+phone;
+                }else {
+                    alert("你没有权限");
+                }
             })
         }
 

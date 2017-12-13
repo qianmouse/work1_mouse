@@ -19,6 +19,24 @@ public class UserServiceImpl implements UserService {
     @Resource
     private UserDao userDao;
 
+    //查看是否具有删除权限
+    public Boolean delPermission(String phone) {
+        String str = userDao.getPermission(phone);
+        if ("删除".equals(str)|"编辑删除".equals(str)){
+            return true;
+        }
+        return false;
+    }
+
+    //查看是否具有编辑权限
+    public Boolean altPermission(String phone) {
+        String str = userDao.getPermission(phone);
+        if ("编辑".equals(str)|"编辑删除".equals(str)){
+            return true;
+        }
+        return false;
+    }
+
     //修改用户
     public void alterUser(String phone, String identity, String role) {
         User user = new User();

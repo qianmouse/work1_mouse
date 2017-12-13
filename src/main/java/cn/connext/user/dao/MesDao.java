@@ -10,6 +10,7 @@ import java.util.List;
  * */
 @Repository
 public interface MesDao {
+
     String findTitle(@Param("title") String title);
 
     Mes findText(@Param("mid") int mid);

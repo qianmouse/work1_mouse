@@ -16,7 +16,7 @@
         $(document).ready(function () {
             //获得sessionStorage中绑定的手机号
             $("#index").attr("href","/user/messages.do?phone="+phone);
-            $("#h2").html("当前用户："+phone)
+            $("#h2").html("当前用户："+phone);
             $(".editData").on("click",editData);
             $(".delData").on("click",delData);
             $(".delCom").on("click",delCom);
@@ -39,29 +39,45 @@
             var mid = $("#mid").val();
             var url = "/comment/delComByCid.do";
             var cid = $(this).attr('name');
-            var params = {"cid":cid,"mid":mid};
-            $.post(url,params,function () {
-                alert("删除成功");
-                //删除消息后重新获得显示消息
-                window.location.href = "/messages/findText.do?mid="+mid;
-            });
+            var params = {"cid":cid,"mid":mid,"phone":phone};
+            $.post(url,params,function (result) {
+                if("success" === result){
+                    alert("删除成功");
+                    //删除消息后重新获得显示消息
+                    window.location.href = "/messages/findText.do?mid="+mid;
+                }else {
+                    alert("你没有权限");
+                }
+            })
         }
 
         function delData() {
             var mid = $("#mid").val();
             var url = "/messages/delMes.do";
-            var params={"mid":mid};
-            $.post(url,params,function () {
-                alert("删除成功");
-                //删除消息后重新获得显示消息
-                window.location.href = "/messages/forum.do";
+            var params={"mid":mid,"phone":phone};
+            $.post(url,params,function (result) {
+                if("success" === result){
+                    alert("删除成功");
+                    //删除消息后重新获得显示消息
+                    window.location.href = "/messages/forum.do";
+                }else {
+                    alert("你没有权限");
+                }
             })
         }
 
         function editData() {
             var mid = $("#mid").val();
-            var url = "/messages/editMes.do";
-            window.location.href = url+"?mid="+mid;
+            var url = "/messages/alterMes.do";
+            var params = {"mid":mid,"phone":phone};
+            $.post(url,params,function (result) {
+                if("true" === result){
+                    window.location.href = "/messages/editMes.do?mid="+mid;
+                }else {
+                    alert("你没有权限");
+                }
+            });
+
         }
     </script>
     <style>

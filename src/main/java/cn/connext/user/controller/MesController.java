@@ -4,6 +4,7 @@ import cn.connext.user.entity.Comment;
 import cn.connext.user.service.ComService;
 import cn.connext.user.entity.Mes;
 import cn.connext.user.service.MesService;
+import cn.connext.user.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +23,16 @@ public class MesController {
     @Resource
     private MesService mesService;
 
+    //查看是否有编辑权限
+    @RequestMapping("alterMes")
+    @ResponseBody
+    public String alterMes(int mid,String phone){
+        if (mesService.alterMes(mid,phone)){
+            return "true";
+        }
+        return "false";
+    }
+
     //前往论坛
     @RequestMapping("forum")
     public String forum(Model model){
@@ -34,7 +45,6 @@ public class MesController {
     @RequestMapping("edit")
     public String edit(String title,String text,int mid){
         mesService.editMes(title,text,mid);
-        System.out.println(title+text+mid);
         return "messages";
     }
 
@@ -89,10 +99,11 @@ public class MesController {
 
     //删除消息并删除消息的评论
     @RequestMapping("delMes")
-    public String delMes(int mid){
-        mesService.delMes(mid);
-        comService.delCom(mid);
-        return "messages";
+    @ResponseBody
+    public String delMes(int mid,String phone){
+        if (mesService.delMes(mid,phone)){
+            return "success";
+        }
+        return "false";
     }
-
 }

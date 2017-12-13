@@ -1,8 +1,11 @@
 package cn.connext.user.service.impl;
 
+import cn.connext.user.dao.ComDao;
 import cn.connext.user.dao.MesDao;
+import cn.connext.user.dao.UserDao;
 import cn.connext.user.entity.Mes;
 import cn.connext.user.service.MesService;
+import cn.connext.user.service.UserService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +20,20 @@ import java.util.List;
 public class MesServiceImpl implements MesService {
     @Resource
     private MesDao mesDao;
+    @Resource
+    private UserService userService;
+    @Resource
+    private ComDao comDao;
+
+    //查看是否具有修改权限
+    //自己的文章可以修改
+    public Boolean alterMes(int mid, String phone) {
+        Mes mes = mesDao.findText(mid);
+        String str = mes.getPhone();
+        if(phone.equals(str)|userService.altPermission(phone))
+            return true;
+        return false;
+    }
 
     public Mes findText(int mid){
         Mes mes = mesDao.findText(mid);
@@ -49,9 +66,17 @@ public class MesServiceImpl implements MesService {
         mesDao.saveMes(mes);
     }
 
-    public void delMes(int mid) {
-
-        mesDao.delMes(mid);
+    public Boolean delMes(int mid,String phone) {
+        //可以删除自己的消息
+        //有权限删除
+        Mes mes = mesDao.findText(mid);
+        String str = mes.getPhone();
+        if (str.equals(phone)|userService.delPermission(phone)){
+            mesDao.delMes(mid);
+            comDao.delCom(mid);
+            return true;
+        }
+        return false;
     }
 
     public void editMes(String title,String text,int mid) {

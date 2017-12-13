@@ -11,6 +11,9 @@ import java.util.List;
  * */
 @Repository
 public interface UserDao {
+    //获得用户的权限
+    String getPermission(@Param("phone") String phone);
+
     //修改用户
     void alterUser(@Param("user") User user);
 

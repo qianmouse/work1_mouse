@@ -23,4 +23,6 @@ public interface ComDao {
 
     void countMinus(@Param("mid") int mid);
 
+    Comment getComByCid(@Param("cid") int cid);
+
 }

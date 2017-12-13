@@ -10,6 +10,12 @@ package cn.connext.user.service;
  * 用户模块业务层接口
  * */
 public interface UserService {
+    //查看是否具有删除权限
+    Boolean delPermission(String phone);
+
+    //查看是否具有修改权限
+    Boolean altPermission(String phone);
+
     //修改用户
     void alterUser(String phone,String identity,String role);
 

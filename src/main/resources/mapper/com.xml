@@ -31,6 +31,11 @@
         DELETE FROM comments
         WHERE cid=#{cid};
     </delete>
+
+    <select id="getComByCid" parameterType="int" resultType="cn.connext.user.entity.Comment">
+        SELECT * FROM Comments
+        WHERE cid=#{cid};
+    </select>
     
 
 </mapper>

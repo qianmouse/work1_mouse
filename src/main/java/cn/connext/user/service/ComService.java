@@ -15,5 +15,7 @@ public interface ComService {
 
     void delCom(int mid);
 
-    void delComByCid(int cid);
+    Boolean delComByCid(int cid,int mid,String phone);
+
+    Comment getComByCid(int cid);
 }

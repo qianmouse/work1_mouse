@@ -1,8 +1,11 @@
 package cn.connext.user.service.impl;
 
 import cn.connext.user.dao.ComDao;
+import cn.connext.user.dao.MesDao;
 import cn.connext.user.entity.Comment;
+import cn.connext.user.entity.Mes;
 import cn.connext.user.service.ComService;
+import cn.connext.user.service.UserService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -14,6 +17,10 @@ public class ComServiceImpl implements ComService {
 
     @Resource
     private ComDao comDao;
+    @Resource
+    private MesDao mesDao;
+    @Resource
+    private UserService userService;
 
     public void putCom(String comment, int mid, String phone) {
         Comment com = new Comment();
@@ -40,7 +47,21 @@ public class ComServiceImpl implements ComService {
         comDao.delCom(mid);
     }
 
-    public void delComByCid(int cid) {
-        comDao.delComByCid(cid);
+    //自己评论的，自己文章的，有权限的可以删除评论
+    public Boolean delComByCid(int cid,int mid,String phone) {
+        Comment com = comDao.getComByCid(cid);
+        String cPhone = com.getPhone();
+        Mes mes = mesDao.findText(mid);
+        String mPhone = mes.getPhone();
+        if (phone.equals(cPhone)|phone.equals(mPhone)|userService.delPermission(phone)){
+            comDao.delComByCid(cid);
+            comDao.countMinus(mid);
+            return true;
+        }
+        return false;
+    }
+
+    public Comment getComByCid(int cid) {
+        return comDao.getComByCid(cid);
     }
 }
