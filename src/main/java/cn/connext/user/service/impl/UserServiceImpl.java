@@ -14,7 +14,7 @@ import java.util.List;
  * 用户模块业务层实现类
  * */
 @Transactional
-@Service
+@Service("userService")
 public class UserServiceImpl implements UserService {
     @Resource
     private UserDao userDao;
@@ -55,6 +55,7 @@ public class UserServiceImpl implements UserService {
         return "ok";
     }
 
+    //添加角色
     public void newRole(String role, String permission) {
         Role role1 = new Role();
         role1.setRole(role);

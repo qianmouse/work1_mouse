@@ -2,7 +2,6 @@ package cn.connext.user.service.impl;
 
 import cn.connext.user.dao.ComDao;
 import cn.connext.user.dao.MesDao;
-import cn.connext.user.dao.UserDao;
 import cn.connext.user.entity.Mes;
 import cn.connext.user.service.MesService;
 import cn.connext.user.service.UserService;

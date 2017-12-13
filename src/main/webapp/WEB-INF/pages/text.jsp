@@ -93,7 +93,6 @@
     <a href="/user/login.do">退出登录</a>
     <a href="" id="index">我的消息</a>
     <a href="/messages/forum.do">进入论坛</a>
-
     <h2>${mes.title}</h2>
     作者：${mes.phone}|时间：${mes.date.toLocaleString()}
     <div style="text-align: left"><p>${mes.text}</p></div>
